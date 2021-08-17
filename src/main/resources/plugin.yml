@@ -1,0 +1,12 @@
+name: KlouvWarp
+main: klouvWarp.KlouvWarp
+version: 1.0
+commands:
+  playerwarp: {}
+  setplayerwarp: {}
+  delplayerwarp: {}
+  warp: {}
+  setwarp: {}
+  delwarp: {}
+
+

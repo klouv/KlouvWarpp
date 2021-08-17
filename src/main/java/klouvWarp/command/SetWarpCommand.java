@@ -1,7 +1,6 @@
 package klouvWarp.command;
 
 import klouvWarp.KlouvWarp;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -10,11 +9,11 @@ import org.bukkit.entity.Player;
 
 import java.util.Map;
 
-public class WarpCommand implements CommandExecutor {
+public class SetWarpCommand implements CommandExecutor {
 
     private Map<String, Location> map;
 
-    public WarpCommand(KlouvWarp plugin) {
+    public SetWarpCommand(KlouvWarp plugin) {
         this.map = plugin.map;
     }
 
@@ -26,19 +25,29 @@ public class WarpCommand implements CommandExecutor {
             return true;
         }
 
+        Player player = (Player) sender;
+
         if (args.length == 0) {
-            sender.sendMessage("you need a args. warp [warpName]");
+            player.sendMessage("---------Warps--------");
+            String content;
+            map.keySet().forEach((k) -> {
+
+            });
+
             return  true;
         }
 
-        Player player = (Player) sender;
+        if (!(sender.hasPermission("KlouvWarpAdmin"))) {
+            sender.sendMessage("this command for admins");
+            return true;
+        }
+
         String name = args[0];
         Location loc = player.getLocation();
 
-        Location location = map.get(name);
-        player.sendMessage("kemerleri bağla gidiyoruzzzzz");
-        //todo bekleme ekle 2 saniye
-        player.teleport(location);
+        map.put(name, loc);
+        player.sendMessage("warp name: " + name + " created");
+        player.sendMessage("warp kaydedildi");
 
         return true;
     }

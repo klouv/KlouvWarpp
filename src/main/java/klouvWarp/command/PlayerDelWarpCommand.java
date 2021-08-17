@@ -10,15 +10,17 @@ import org.bukkit.entity.Player;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerWarpCommand implements CommandExecutor {
+public class PlayerDelWarpCommand implements CommandExecutor {
+
 
     Map<UUID, Map<String, Location>> playerMap;
     Map<String, Location> valueMap;
 
-    public PlayerWarpCommand(KlouvWarp plugin) {
+    public PlayerDelWarpCommand(KlouvWarp plugin) {
         this.playerMap = plugin.playerMap;
         this.valueMap = plugin.valueMap;
     }
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -29,7 +31,7 @@ public class PlayerWarpCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage("you need a args. playerwarp [warpName]");
+            sender.sendMessage("you need a args. playerdelwarp [warpName]");
             return true;
         }
 
@@ -38,11 +40,9 @@ public class PlayerWarpCommand implements CommandExecutor {
         Location loc = player.getLocation();
         String name = args[0];
 
-        if (label.equals("playerwarp")) {
-            Location location = playerMap.get(player.getUniqueId()).get(name);
-            player.teleport(location);
-            player.sendMessage("kemerleri bağlaa uçuyoruzzz");
-        }
+        playerMap.get(player.getUniqueId()).remove(name);
+        player.sendMessage("warp name: " + name + " deleted");
+
         return true;
     }
 }

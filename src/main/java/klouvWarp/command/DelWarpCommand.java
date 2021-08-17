@@ -8,20 +8,18 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
-import java.util.UUID;
 
-public class PlayerWarpCommand implements CommandExecutor {
+public class DelWarpCommand implements CommandExecutor {
 
-    Map<UUID, Map<String, Location>> playerMap;
-    Map<String, Location> valueMap;
+    private Map<String, Location> map;
 
-    public PlayerWarpCommand(KlouvWarp plugin) {
-        this.playerMap = plugin.playerMap;
-        this.valueMap = plugin.valueMap;
+    public DelWarpCommand(KlouvWarp plugin) {
+        this.map = plugin.map;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
 
         if (!(sender instanceof Player)) {
             sender.sendMessage("you not use the command");
@@ -29,20 +27,23 @@ public class PlayerWarpCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage("you need a args. playerwarp [warpName]");
+            sender.sendMessage("you need a args. delwarp [warpName]");
+            return  true;
+        }
+
+        if (!(sender.hasPermission("KlouvWarpAdmin"))) {
+            sender.sendMessage("this command for admins");
             return true;
         }
 
         Player player = (Player) sender;
-
-        Location loc = player.getLocation();
         String name = args[0];
+        Location loc = player.getLocation();
 
-        if (label.equals("playerwarp")) {
-            Location location = playerMap.get(player.getUniqueId()).get(name);
-            player.teleport(location);
-            player.sendMessage("kemerleri bağlaa uçuyoruzzz");
-        }
+        map.remove(name);
+        player.sendMessage("warp name: " + name + " deleted" );
+        player.sendMessage("warp silindi");
+
         return true;
     }
 }

@@ -10,12 +10,13 @@ import org.bukkit.entity.Player;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerWarpCommand implements CommandExecutor {
+public class PlayerSetWarpCommand implements CommandExecutor {
+
 
     Map<UUID, Map<String, Location>> playerMap;
     Map<String, Location> valueMap;
 
-    public PlayerWarpCommand(KlouvWarp plugin) {
+    public PlayerSetWarpCommand(KlouvWarp plugin) {
         this.playerMap = plugin.playerMap;
         this.valueMap = plugin.valueMap;
     }
@@ -29,20 +30,19 @@ public class PlayerWarpCommand implements CommandExecutor {
         }
 
         if (args.length == 0) {
-            sender.sendMessage("you need a args. playerwarp [warpName]");
+            sender.sendMessage("you need a args. playersetwarp [warpName]");
             return true;
         }
 
         Player player = (Player) sender;
-
         Location loc = player.getLocation();
         String name = args[0];
 
-        if (label.equals("playerwarp")) {
-            Location location = playerMap.get(player.getUniqueId()).get(name);
-            player.teleport(location);
-            player.sendMessage("kemerleri bağlaa uçuyoruzzz");
-        }
+        Map s = (Map) valueMap.put(name, loc);
+        playerMap.put(player.getUniqueId(), s);
+        //buradan emin değilim intelij ekledi
+        player.sendMessage("warp name: " + name + " created");
+
         return true;
     }
 }

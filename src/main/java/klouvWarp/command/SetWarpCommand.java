@@ -28,14 +28,10 @@ public class SetWarpCommand implements CommandExecutor {
         Player player = (Player) sender;
 
         if (args.length == 0) {
-            player.sendMessage("---------Warps--------");
-            String content;
-            map.keySet().forEach((k) -> {
-
-            });
-
-            return  true;
+            player.sendMessage("you nnot use the command");
+            return true;
         }
+
 
         if (!(sender.hasPermission("KlouvWarpAdmin"))) {
             sender.sendMessage("this command for admins");
